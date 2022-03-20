@@ -1,0 +1,5 @@
+{% with msgs = get_flashed_messages() %}
+{% for msg in msgs  %}
+<span style="color: red">&#9888; {{msg}} &#9888;</span>
+{% endfor %}
+{% endwith %}

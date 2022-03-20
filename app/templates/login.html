@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+</head>
+<body>
+{%include "menu.html"%}
+<div class="container">
+    <h1>Log in</h1>
+    <form action="" method="post">
+        <div class="input-field col s6">
+            <i class="material-icons prefix">account_circle</i>
+            <input name="username" id="username" type="text" class="validate">
+            <label for="username">UserName</label>
+        </div>
+
+
+        <div class="input-field col s6">
+            <i class="material-icons prefix">vpn_key</i>
+            <input name="password" id="password" type="password" class="validate">
+            <label for="password">Password</label>
+        </div>
+        <p>
+            <label>
+                <input name="remember" type="checkbox" checked="checked"/>
+                <span>Remember me</span>
+            </label>
+        </p>
+        <button class="waves-effect waves-light btn-large"><i class="material-icons left">arrow_upward</i>
+Log in</button>
+    </form>
+    {%include "flash.html"%}
+</div>
+</body>
+</html>
