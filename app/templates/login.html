@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
+    <style>
+        h1 {
+            margin-bottom: 4rem !important;
+        }
+    </style>
 </head>
+
 <body>
-{%include "menu.html"%}
-<div class="container">
-    <h1>Log in</h1>
-    <form action="" method="post">
-        <div class="input-field col s6">
-            <i class="material-icons prefix">account_circle</i>
-            <input name="username" id="username" type="text" class="validate">
-            <label for="username">UserName</label>
+    {%include "menu.html"%}
+    <div class="container">
+        <h1 class="center">Login</h1>
+        <div class="row">
+            <form class="z-depth-3 y-depth-3 x-depth-3 grey green-text lighten-4 col l4 offset-l4" method="post">
+                    <div class='row'>
+                        <div class='input-field col l6 offset-l3'>
+                            <i class="material-icons prefix">account_circle</i>
+                            <input class='validate' type="text" name='username' id='email' required />
+                            <label for='email'>Username</label>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col l6 offset-l3'>
+                            <i class="material-icons prefix">vpn_key</i>
+                            <input class='validate' type='password' name='password' id='password' required />
+                            <label for='password'>Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col l6 offset-l3">
+                            <input name="remember" type="checkbox" checked="checked"/>
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <button class="waves-effect waves-light btn-large col l10 offset-l1"><i class="material-icons left">arrow_upward</i>
+                            Log in</button>
+                    </div>
+     
+            </form>
         </div>
-
-
-        <div class="input-field col s6">
-            <i class="material-icons prefix">vpn_key</i>
-            <input name="password" id="password" type="password" class="validate">
-            <label for="password">Password</label>
-        </div>
-        <p>
-            <label>
-                <input name="remember" type="checkbox" checked="checked"/>
-                <span>Remember me</span>
-            </label>
-        </p>
-        <button class="waves-effect waves-light btn-large"><i class="material-icons left">arrow_upward</i>
-Log in</button>
-    </form>
-    {%include "flash.html"%}
-</div>
+        {%include "flash.html"%}
+    </div>
 </body>
+
 </html>
