@@ -1,9 +1,12 @@
-from app import my_app, db
+from random import randint
+
+from app import my_app, db, mail
 from flask import render_template, request, redirect, url_for, flash
 from app.models import User, Post
 from datetime import datetime
 from flask_login import login_required, current_user, login_user, logout_user
-
+from flask_mail import Message
+from hashlib import md5
 
 @my_app.route('/logout')
 def logout():
@@ -73,4 +76,31 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
-        print(1)
+
+
+@my_app.route("/reset_password", methods=['GET', 'POST'])
+def reset_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    if request.method == 'GET':
+        return render_template("reset_password.html")
+    if request.method == "POST":
+        form = request.form
+        email = form.get('email')
+        user = User.query.filter_by(email=email).first()
+        if user:
+
+            new_password=generate_password()
+            user.set_password(new_password)
+            db.session.commit()
+            send_email(email,new_password)
+        return render_template("reset_password.html")
+
+
+def send_email(user_email, new_password):
+    message=Message("Microblog. Reset password", sender="micro.blog@bk.ru", recipients=[user_email])
+    message.body = f"Hello, you request reset password.\nYour new password: {new_password}"
+    mail.send(message)
+
+def generate_password():
+    return md5 (str(randint(0,100)).encode('utf-8')).hexdigest()[:9]
