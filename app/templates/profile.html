@@ -16,5 +16,31 @@ About me:
 {% endif %}
 last seen: {{user.last_seen}}
 <hr>
+<ul class="collection with-header">
+      <li class="collection-header">
+        <h4>Last posts in blog</h4>
+      </li>
+      {% for post in posts.items %}
+      <li class="collection-item avatar">
+        <img src="{{post.author.get_avatar(32)}}" alt="" class="circle">
+        <span class="title">{{post.author.username}}</span>
+        <p>{{post.timestamp.strftime('%d.%m %H:%M')}}<br>
+          {{post.text}}
+        </p>
+        <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+      </li>
+      {% endfor %}
+    </ul>
+    <ul class="pagination">
+      {% if posts.has_prev %}
+      <li class="active blue"><a href="/index?page={{posts.prev_num}}"><i class="material-icons">chevron_left</i></a></li>
+
+  {% endif %}
+    {% if posts.has_next %}
+      <li class="active blue"><a href="/index?page={{posts.next_num}}"><i class="material-icons">chevron_right</i></a></li>
+
+  {% endif %}
+
+    </ul>
 </body>
 </html>

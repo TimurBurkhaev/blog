@@ -14,28 +14,40 @@
     {% if current_user.is_authenticated %}
     <form method="post">
       <div class="input-field col s12">
-        <textarea id="textarea1" name="text" class="materialize-textarea"></textarea>
+        <textarea id="textarea1" name="text" class="materialize-textarea" wrap="hard"></textarea>
         <label for="textarea1">Text</label>
       </div>
       <button class="btn waves-effect waves-light" type="submit" name="action">Submit
         <i class="material-icons right">send</i>
       </button>
     </form>
+    {%include "flash.html"%}
     {% endif %}
     <ul class="collection with-header">
       <li class="collection-header">
         <h4>Last posts in blog</h4>
       </li>
-      {% for post in posts %}
+      {% for post in posts.items %}
       <li class="collection-item avatar">
         <img src="{{post.author.get_avatar(32)}}" alt="" class="circle">
         <span class="title">{{post.author.username}}</span>
-        <p>{{post.timestamp}}<br>
+        <p>{{post.timestamp.strftime('%d.%m %H:%M')}}<br>
           {{post.text}}
         </p>
         <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
       </li>
       {% endfor %}
+    </ul>
+    <ul class="pagination">
+      {% if posts.has_prev %}
+      <li class="active blue"><a href="/index?page={{posts.prev_num}}"><i class="material-icons">chevron_left</i></a></li>
+
+  {% endif %}
+    {% if posts.has_next %}
+      <li class="active blue"><a href="/index?page={{posts.next_num}}"><i class="material-icons">chevron_right</i></a></li>
+
+  {% endif %}
+
     </ul>
   </div>
 </body>

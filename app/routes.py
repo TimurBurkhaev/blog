@@ -18,10 +18,17 @@ def logout():
 @my_app.route('/index', methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        all_posts = Post.query.all()
+        if 'page' in request.args:
+            page = int(request.args['page'])
+        else:
+            page=1
+        all_posts = Post.query.order_by(Post.timestamp.desc()).paginate(page,10,False)
         return render_template("index.html", posts=all_posts)
     elif request.method == "POST":
-        text = request.form.get("text")
+        text = request.form.get("text").strip()
+        if text =='':
+            flash('Empty message')
+            return redirect(url_for('index'))
         post = Post(text=text, author=current_user, timestamp=datetime.utcnow())
         db.session.add(post)
         db.session.commit()
@@ -104,3 +111,13 @@ def send_email(user_email, new_password):
 
 def generate_password():
     return md5 (str(randint(0,100)).encode('utf-8')).hexdigest()[:9]
+
+
+@my_app.errorhandler(404)
+def error404(error):
+    return render_template('404.html'),404
+
+
+@my_app.errorhandler(500)
+def error500(error):
+    return render_template('500.html'),500
