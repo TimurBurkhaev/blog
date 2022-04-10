@@ -28,3 +28,4 @@ admin = Admin(my_app, name='my_app', template_mode='bootstrap3')
 from app import routes, models
 
 admin.add_view(ModelView(models.User, db.session))
+admin.add_view(ModelView(models.Post, db.session))

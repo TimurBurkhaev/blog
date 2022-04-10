@@ -74,8 +74,13 @@ def regist():
 
 @my_app.route('/profile/<user_name>')
 def profile(user_name):
+    if 'page' in request.args:
+        page = int(request.args['page'])
+    else:
+        page = 1
     user = User.query.filter_by(username=user_name).first_or_404()
-    return render_template("profile.html", user=user)
+    posts = Post.query.filter_by(author = user).order_by(Post.timestamp.desc()).paginate(page,10,False)
+    return render_template("profile.html", user=user, posts = posts)
 
 
 @my_app.before_request
@@ -121,3 +126,33 @@ def error404(error):
 @my_app.errorhandler(500)
 def error500(error):
     return render_template('500.html'),500
+
+@login_required
+@my_app.route("/delete_posts", methods=["GET"])
+def delete_posts():
+    post_id = request.args['post_id']
+    post = Post.query.get(post_id)
+    if current_user == post.author:
+        db.session.delete(post)
+        db.session.commit()
+    return redirect(request.referrer)
+
+@login_required
+@my_app.route("/edit_profile")
+def edit_profile():
+    return render_template("edit_profile.html")
+
+@login_required
+@my_app.route("/change_password", methods=['POST'])
+def change_password():
+   new_password = request.form.get("password")
+   current_user.set_password(new_password)
+   db.session.commit()
+   return redirect(request.referrer)
+
+@my_app.route("/set_aboutme", methods=['POST'])
+def set_aboutme():
+    new_aboutme = request.form.get("aboutme")
+    current_user.about_me = new_aboutme
+    db.session.commit()
+    return redirect(request.referrer)

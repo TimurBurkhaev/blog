@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{%include "menu.html"%}
+ <div class="container">
+<form class="z-depth-3 y-depth-3 x-depth-3 grey green-text lighten-4 col l4 offset-l4" method="post" action="/change_password">
+
+                    <div class='row'>
+                        <div class='input-field col l6 offset-l3'>
+                            <i class="material-icons prefix">vpn_key</i>
+                            <input class='validate' type='password' name='password' id='password' required />
+                            <label for='password'>Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="waves-effect waves-light btn-large col l10 offset-l1"><i class="material-icons left">arrow_upward</i>
+                            Change password</button>
+                    </div>
+
+            </form>
+
+<form class="z-depth-3 y-depth-3 x-depth-3 grey green-text lighten-4 col l4 offset-l4" method="post" action="/set_aboutme">
+
+                    <div class='row'>
+                        <div class='input-field col l6 offset-l3'>
+                            <i class="material-icons prefix">assignment_ind</i>
+                            <textarea id="aboutme" name="aboutme" class="materialize-textarea" wrap="hard">{{current_user.about_me}}</textarea>
+                            <label for='aboutme'>About me</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="waves-effect waves-light btn-large col l10 offset-l1"><i class="material-icons left">create</i>
+                            Set About me info</button>
+                    </div>
+
+            </form>
+</div>
+</body>
+</html>

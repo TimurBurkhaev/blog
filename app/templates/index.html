@@ -34,7 +34,9 @@
         <p>{{post.timestamp.strftime('%d.%m %H:%M')}}<br>
           {{post.text}}
         </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+        {% if current_user == post.author %}
+        <a href="/delete_posts?post_id={{post.id}}" class="secondary-content"><i class="material-icons">delete</i></a>
+      {% endif %}
       </li>
       {% endfor %}
     </ul>

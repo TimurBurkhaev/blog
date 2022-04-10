@@ -6,7 +6,7 @@
 </head>
 <body>
 {%include "menu.html"%}
-<img src="{{user.get_avatar(128)}}">
+<div class="container"><img src="{{user.get_avatar(128)}}">
 <h1>User: {{user.username}}</h1>
 About me:
 {% if user.about_me %}
@@ -14,8 +14,7 @@ About me:
 {% else  %}
 <p>нет информации</p>
 {% endif %}
-last seen: {{user.last_seen}}
-<hr>
+last seen: {{user.last_seen.strftime('%d.%m %H:%M')}}
 <ul class="collection with-header">
       <li class="collection-header">
         <h4>Last posts in blog</h4>
@@ -27,20 +26,23 @@ last seen: {{user.last_seen}}
         <p>{{post.timestamp.strftime('%d.%m %H:%M')}}<br>
           {{post.text}}
         </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+          {% if current_user == post.author %}
+        <a href="/delete_posts?post_id={{post.id}}" class="secondary-content"><i class="material-icons">delete</i></a>
+      {% endif %}
       </li>
       {% endfor %}
     </ul>
     <ul class="pagination">
       {% if posts.has_prev %}
-      <li class="active blue"><a href="/index?page={{posts.prev_num}}"><i class="material-icons">chevron_left</i></a></li>
+      <li class="active blue"><a href="/profile/{{user.username}}?page={{posts.prev_num}}"><i class="material-icons">chevron_left</i></a></li>
 
   {% endif %}
     {% if posts.has_next %}
-      <li class="active blue"><a href="/index?page={{posts.next_num}}"><i class="material-icons">chevron_right</i></a></li>
+      <li class="active blue"><a href="/profile/{{user.username}}?page={{posts.next_num}}"><i class="material-icons">chevron_right</i></a></li>
 
   {% endif %}
 
     </ul>
+ </div>
 </body>
 </html>
